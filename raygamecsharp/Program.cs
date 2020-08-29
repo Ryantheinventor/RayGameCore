@@ -19,42 +19,113 @@
 *
 ********************************************************************************************/
 
+
 using Raylib_cs;
 using static Raylib_cs.Raylib;
 using static Raylib_cs.Color;
+using static raygamecsharp.GameObjectList;
+using System.Numerics;
 
-namespace Examples
+namespace raygamecsharp
 {
     public class core_basic_window
     {
+        static Vector2 cameraPos = new Vector2(0,0);
+        
+        public static void Start()
+        {
+            foreach (GameObject g in Objects) 
+            {
+                g.Start();
+            }
+        }
+
+        public static void Update() 
+        {
+            //Run all collision checks
+            if (Objects.Count > 1) {
+                for (int i = 0; i < Objects.Count - 1; i++)
+                {
+                    if (Objects[i].collider != null)
+                    {
+                        for (int j = i + 1; j < Objects.Count; j++)
+                        {
+                            if (Objects[j].collider != null)
+                            {
+                                if (Objects[i].collider.CollidesWith(Objects[j].collider))
+                                {
+                                    Objects[i].OnCollisionEnter(Objects[j].collider);
+                                    Objects[j].OnCollisionEnter(Objects[i].collider);
+                                }
+                            }
+                        }
+                    }
+                    Objects[i].collider.ChecksForExits();
+                }
+            }
+            if (Objects[Objects.Count - 1].collider != null) {
+                Objects[Objects.Count - 1].collider.ChecksForExits();
+            }
+
+            //Run all update functions
+            foreach (GameObject g in Objects)
+            {
+                g.Update();
+            }
+
+            //Physics update
+            foreach (GameObject g in Objects) 
+            {
+                if (g.collider != null) 
+                {
+                    if (g.collider.IsKinematic) 
+                    {
+                        Physics.UpdateObject(g.collider);
+                    }
+                }
+            }
+
+            //Load queue in main object list
+            UpdateObjectList();
+
+        }
+
+        public static void Draw() 
+        {
+            ClearBackground(RAYWHITE);
+            foreach (GameObject g in Objects)
+            {
+                g.Draw();
+            }
+            DrawText(GetFPS().ToString(), 10, 10, 20, GREEN);
+            //DrawText("Congrats! You created your first window!", 190, 200, 20, MAROON);
+        }
+
         public static int Main()
         {
             // Initialization
             //--------------------------------------------------------------------------------------
-            const int screenWidth = 800;
-            const int screenHeight = 450;
+            const int screenWidth = 1600;
+            const int screenHeight = 900;
 
-            InitWindow(screenWidth, screenHeight, "raylib [core] example - basic window");
+            InitWindow(screenWidth, screenHeight, "Raylib Game C#");
 
             SetTargetFPS(60);
             //--------------------------------------------------------------------------------------
-
+            
+            Start();
             // Main game loop
             while (!WindowShouldClose())    // Detect window close button or ESC key
             {
-                // Update
+                
+                // Update 
                 //----------------------------------------------------------------------------------
-                // TODO: Update your variables here
+                Update();
                 //----------------------------------------------------------------------------------
-
                 // Draw
                 //----------------------------------------------------------------------------------
                 BeginDrawing();
-
-                ClearBackground(RAYWHITE);
-
-                DrawText("Congrats! You created your first window!", 190, 200, 20, MAROON);
-
+                Draw();
                 EndDrawing();
                 //----------------------------------------------------------------------------------
             }
