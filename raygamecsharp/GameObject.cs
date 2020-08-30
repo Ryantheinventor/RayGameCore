@@ -6,6 +6,8 @@ using Raylib_cs;
 using static Raylib_cs.Raylib;
 using static Raylib_cs.Color;
 using static raygamecsharp.GameObjectList;
+using raygamecsharp;
+using RGPhysics;
 
 namespace raygamecsharp
 {

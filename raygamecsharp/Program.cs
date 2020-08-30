@@ -25,12 +25,15 @@ using static Raylib_cs.Raylib;
 using static Raylib_cs.Color;
 using static raygamecsharp.GameObjectList;
 using System.Numerics;
+using raygamecsharp;
+using RGPhysics;
 
 namespace raygamecsharp
 {
     public class core_basic_window
     {
         static Vector2 cameraPos = new Vector2(0,0);
+        static bool ShowDebug = true;
         
         public static void Start()
         {
@@ -42,30 +45,34 @@ namespace raygamecsharp
 
         public static void Update() 
         {
+            if (IsKeyPressed(KeyboardKey.KEY_LEFT_BRACKET)) 
+            {
+                ShowDebug = !ShowDebug;
+            }
             //Run all collision checks
-            if (Objects.Count > 1) {
-                for (int i = 0; i < Objects.Count - 1; i++)
-                {
-                    if (Objects[i].collider != null)
-                    {
-                        for (int j = i + 1; j < Objects.Count; j++)
-                        {
-                            if (Objects[j].collider != null)
-                            {
-                                if (Objects[i].collider.CollidesWith(Objects[j].collider))
-                                {
-                                    Objects[i].OnCollisionEnter(Objects[j].collider);
-                                    Objects[j].OnCollisionEnter(Objects[i].collider);
-                                }
-                            }
-                        }
-                    }
-                    Objects[i].collider.ChecksForExits();
-                }
-            }
-            if (Objects[Objects.Count - 1].collider != null) {
-                Objects[Objects.Count - 1].collider.ChecksForExits();
-            }
+            //if (Objects.Count > 1) {
+            //    for (int i = 0; i < Objects.Count - 1; i++)
+            //    {
+            //        if (Objects[i].collider != null)
+            //        {
+            //            for (int j = i + 1; j < Objects.Count; j++)
+            //            {
+            //                if (Objects[j].collider != null)
+            //                {
+            //                    if (Objects[i].collider.CollidesWith(Objects[j].collider))
+            //                    {
+            //                        Objects[i].OnCollisionEnter(Objects[j].collider);
+            //                        Objects[j].OnCollisionEnter(Objects[i].collider);
+            //                    }
+            //                }
+            //            }
+            //        }
+            //        Objects[i].collider.ChecksForExits();
+            //    }
+            //}
+            //if (Objects[Objects.Count - 1].collider != null) {
+            //    Objects[Objects.Count - 1].collider.ChecksForExits();
+            //}
 
             //Run all update functions
             foreach (GameObject g in Objects)
@@ -74,16 +81,8 @@ namespace raygamecsharp
             }
 
             //Physics update
-            foreach (GameObject g in Objects) 
-            {
-                if (g.collider != null) 
-                {
-                    if (g.collider.IsKinematic) 
-                    {
-                        Physics.UpdateObject(g.collider);
-                    }
-                }
-            }
+            Physics.Update();
+            
 
             //Load queue in main object list
             UpdateObjectList();
@@ -97,7 +96,11 @@ namespace raygamecsharp
             {
                 g.Draw();
             }
-            DrawText(GetFPS().ToString(), 10, 10, 20, GREEN);
+            if (ShowDebug) {
+                DrawText(GetFPS().ToString(), 10, 10, 20, GREEN);
+                DrawText($"Object Count:{Objects.Count}", 10, 40, 20, RED);
+                DrawText(GetObjectListString(), 10, 60, 10, RED);
+            }
             //DrawText("Congrats! You created your first window!", 190, 200, 20, MAROON);
         }
 

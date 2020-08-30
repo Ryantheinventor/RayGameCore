@@ -7,6 +7,8 @@ using static Raylib_cs.Raylib;
 using static Raylib_cs.Color;
 using System.Numerics;
 using static raygamecsharp.GameObjectList;
+using raygamecsharp;
+using RGPhysics;
 
 namespace raygamecsharp
 {
@@ -26,6 +28,7 @@ namespace raygamecsharp
             collider.IsKinematic = true;
             collider.EnableGravity = true;
             collider.Velocity = new Vector2(100, -500);
+            collider.AutoClean = true;
             ((RectangleCollider)collider).scale = new Vector2(transform.scale.X, transform.scale.Y);
             base.Start();
         }
@@ -33,13 +36,13 @@ namespace raygamecsharp
         public override void Update()
         {
             timePassed += GetFrameTime();
-            if (timePassed > 1)
-            {
-                timePassed = 0;
-                CollisionTestRectangle newTest = new CollisionTestRectangle("Test", new Vector2(transform.translation.X, transform.translation.Y));
-                NewObject(newTest);
-                newTest.collider.Velocity = new Vector2(new Random().Next(-600, 600), -(new Random().Next(100, 600)));
-            }
+            //if (timePassed > 1)
+            //{
+            //    timePassed = 0;
+            //    CollisionTestRectangle newTest = new CollisionTestRectangle("Test", new Vector2(transform.translation.X, transform.translation.Y));
+            //    NewObject(newTest);
+            //    newTest.collider.Velocity = new Vector2(new Random().Next(-600, 600), -(new Random().Next(100, 600)));
+            //}
         }
 
         public override void Draw()
@@ -72,6 +75,7 @@ namespace raygamecsharp
         {
             transform.scale = new Vector3(40, 40, 0);
             collider = new CircleCollider();
+            collider.IsStatic = true;
             ((CircleCollider)collider).radius = 20;
             base.Start();
 

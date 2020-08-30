@@ -5,6 +5,8 @@ using Raylib_cs;
 using static Raylib_cs.Raylib;
 using static Raylib_cs.Color;
 using System.Numerics;
+using raygamecsharp;
+using RGPhysics;
 
 namespace raygamecsharp
 {
@@ -18,7 +20,6 @@ namespace raygamecsharp
             new Player("Player", new Vector2(0,0)),
             new CollisionTestRectangle("Test", new Vector2(400,200)),
             new CollisionTestCircle("Test", new Vector2(200,200))
-
         };
 
         private static List<GameObject> Queue = new List<GameObject>
@@ -53,5 +54,18 @@ namespace raygamecsharp
         {
             Marked.Add(gameObject);
         }
+
+        public static string GetObjectListString() 
+        {
+            string output = "";
+
+            foreach (GameObject g in Objects) 
+            {
+                output += $"{g.GetType()}:{g.name}\n";
+            }
+
+            return output;
+        }
+
     }
 }

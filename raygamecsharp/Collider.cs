@@ -6,31 +6,38 @@ using static Raylib_cs.Raylib;
 using static Raylib_cs.Color;
 using System.Numerics;
 using Raylib_cs;
+using raygamecsharp;
+using RGPhysics;
 
-namespace raygamecsharp
+namespace RGPhysics
 {
     abstract class Collider
     {
         public abstract bool AutoClean { get; set; }
+        public abstract bool IsStatic { get; set; }
         public abstract bool IsKinematic { get; set; }
         public abstract Vector2 Velocity { get; set; }
+        public abstract float Bounce { get; set; }
         public abstract bool EnableGravity { get; set; }
         protected List<Collider> lastCheck = new List<Collider>();
         protected List<Collider> thisCheck = new List<Collider>();
         public abstract string ColliderType { get; }
         public GameObject gameObject;
+        
         public abstract void Draw();
         public abstract bool CollidesWith(Collider other);
         public abstract bool CollidesWithCircle(CircleCollider other);
         public abstract bool CollidesWithRec(RectangleCollider other);
-        public abstract void ChecksForExits();
+        public abstract void ChecksForExits(List<Collision> collisions);
     }
 
     class CircleCollider : Collider
     {
+        public override float Bounce { get; set; } = 1f;
         public override bool AutoClean { get; set; } = false;
         public override Vector2 Velocity { get; set; } = new Vector2(0, 0);
         public override bool IsKinematic { get; set; } = false;
+        public override bool IsStatic { get; set; } = false;
         public override bool EnableGravity { get; set; } = false;
         public override string ColliderType 
         {
@@ -74,14 +81,14 @@ namespace raygamecsharp
             }
             return false;
         }
-        public override void ChecksForExits() 
+        public override void ChecksForExits(List<Collision> collisions) 
         {
+            
             foreach (Collider c in lastCheck) 
             {
                 if (!thisCheck.Contains(c)) 
                 {
-                    c.gameObject.OnCollisionExit(this);
-                    gameObject.OnCollisionExit(c);
+                    collisions.Add(new Collision(this, c, false));
                 }
             }
             lastCheck = new List<Collider>(thisCheck);
@@ -91,10 +98,12 @@ namespace raygamecsharp
 
     class RectangleCollider : Collider
     {
+        public override float Bounce { get; set; } = 1f;
         public override bool AutoClean { get; set; } = false;
         public override bool EnableGravity { get; set; } = false;
         public override Vector2 Velocity { get; set; } = new Vector2(0,0);
         public override bool IsKinematic { get; set; } = false;
+        public override bool IsStatic { get; set; } = false;
         public override string ColliderType
         {
             get => "Rectangle";
@@ -134,14 +143,14 @@ namespace raygamecsharp
             }
             return false;
         }
-        public override void ChecksForExits()
+        public override void ChecksForExits(List<Collision> collisions)
         {
+
             foreach (Collider c in lastCheck)
             {
                 if (!thisCheck.Contains(c))
                 {
-                    c.gameObject.OnCollisionExit(this);
-                    gameObject.OnCollisionExit(c);
+                    collisions.Add(new Collision(this, c, false));
                 }
             }
             lastCheck = new List<Collider>(thisCheck);

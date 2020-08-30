@@ -6,6 +6,8 @@ using static Raylib_cs.Raylib;
 using static Raylib_cs.Color;
 using System.Numerics;
 using static raygamecsharp.GameObjectList;
+using raygamecsharp;
+using RGPhysics;
 
 namespace raygamecsharp
 {
@@ -18,6 +20,7 @@ namespace raygamecsharp
         public override void Start()
         {
             collider = new CircleCollider();
+            collider.IsStatic = true;
             ((CircleCollider)collider).radius = 20;
             base.Start();
             //transform.translation = new Vector3(100, 100, 0);
