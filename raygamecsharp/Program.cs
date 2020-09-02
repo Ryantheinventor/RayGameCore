@@ -49,30 +49,6 @@ namespace raygamecsharp
             {
                 ShowDebug = !ShowDebug;
             }
-            //Run all collision checks
-            //if (Objects.Count > 1) {
-            //    for (int i = 0; i < Objects.Count - 1; i++)
-            //    {
-            //        if (Objects[i].collider != null)
-            //        {
-            //            for (int j = i + 1; j < Objects.Count; j++)
-            //            {
-            //                if (Objects[j].collider != null)
-            //                {
-            //                    if (Objects[i].collider.CollidesWith(Objects[j].collider))
-            //                    {
-            //                        Objects[i].OnCollisionEnter(Objects[j].collider);
-            //                        Objects[j].OnCollisionEnter(Objects[i].collider);
-            //                    }
-            //                }
-            //            }
-            //        }
-            //        Objects[i].collider.ChecksForExits();
-            //    }
-            //}
-            //if (Objects[Objects.Count - 1].collider != null) {
-            //    Objects[Objects.Count - 1].collider.ChecksForExits();
-            //}
 
             //Run all update functions
             foreach (GameObject g in Objects)
@@ -82,7 +58,12 @@ namespace raygamecsharp
 
             //Physics update
             Physics.Update();
-            
+
+            //Run all physics update functions
+            foreach (GameObject g in Objects)
+            {
+                g.PhysicsUpdate();
+            }
 
             //Load queue in main object list
             UpdateObjectList();
@@ -120,17 +101,10 @@ namespace raygamecsharp
             // Main game loop
             while (!WindowShouldClose())    // Detect window close button or ESC key
             {
-                
-                // Update 
-                //----------------------------------------------------------------------------------
                 Update();
-                //----------------------------------------------------------------------------------
-                // Draw
-                //----------------------------------------------------------------------------------
                 BeginDrawing();
                 Draw();
                 EndDrawing();
-                //----------------------------------------------------------------------------------
             }
 
             // De-Initialization

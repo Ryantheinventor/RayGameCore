@@ -24,6 +24,9 @@ namespace raygamecsharp
             transform.translation = new Vector3(pos,0);
         }
 
+        /// <summary>
+        /// Called when the object is created
+        /// </summary>
         public virtual void Start()
         {
             if (collider != null) 
@@ -32,7 +35,18 @@ namespace raygamecsharp
             }
         }
 
+        /// <summary>
+        /// Called before phsics are calculated
+        /// </summary>
         public virtual void Update()
+        {
+
+        }
+
+        /// <summary>
+        /// Called after phsics are calculated
+        /// </summary>
+        public virtual void PhysicsUpdate()
         {
 
         }

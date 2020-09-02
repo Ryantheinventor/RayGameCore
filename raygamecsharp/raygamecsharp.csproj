@@ -9,4 +9,10 @@
     <PackageReference Include="Raylib-cs" Version="3.1.5" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="TestImage.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>

@@ -23,12 +23,14 @@ namespace RGPhysics
         protected List<Collider> thisCheck = new List<Collider>();
         public abstract string ColliderType { get; }
         public GameObject gameObject;
-        
+        public Vector2 lastPos = new Vector2();
+
         public abstract void Draw();
         public abstract bool CollidesWith(Collider other);
         public abstract bool CollidesWithCircle(CircleCollider other);
         public abstract bool CollidesWithRec(RectangleCollider other);
         public abstract void ChecksForExits(List<Collision> collisions);
+        public abstract Vector2 GetClosestMidpoint(Vector2 target);
     }
 
     class CircleCollider : Collider
@@ -94,6 +96,11 @@ namespace RGPhysics
             lastCheck = new List<Collider>(thisCheck);
             thisCheck = new List<Collider>();
         }
+
+        public override Vector2 GetClosestMidpoint(Vector2 target)
+        {
+            return new Vector2(gameObject.transform.translation.X, gameObject.transform.translation.Y);
+        }
     }
 
     class RectangleCollider : Collider
@@ -155,6 +162,49 @@ namespace RGPhysics
             }
             lastCheck = new List<Collider>(thisCheck);
             thisCheck = new List<Collider>();
+        }
+
+        public override Vector2 GetClosestMidpoint(Vector2 target)
+        {
+            Vector2 output = new Vector2(gameObject.transform.translation.X, gameObject.transform.translation.Y);
+            if (scale.X > scale.Y)
+            {
+                float max = ((scale.X - scale.Y) / 2) + gameObject.transform.translation.X;
+                float min = (((scale.X - scale.Y) / 2) * -1) + gameObject.transform.translation.X;
+                if (target.X <= max && target.X >= min)
+                {
+                    output.X = target.X;
+                }
+                else if (target.X > max)
+                {
+                    output.X = max;
+                }
+                else if (target.X < min)
+                {
+                    output.X = min;
+                }
+
+            } 
+            else if(scale.X < scale.Y)
+            {
+                float max = ((scale.Y - scale.X) / 2) + gameObject.transform.translation.Y;
+                float min = (((scale.Y - scale.X) / 2) * -1) + gameObject.transform.translation.Y;
+                if (target.Y <= max && target.Y >= min)
+                {
+                    output.Y = target.Y;
+                }
+                else if (target.Y > max)
+                {
+                    output.Y = max;
+                }
+                else if (target.Y < min)
+                {
+                    output.Y = min;
+                }
+            }
+
+
+            return output;
         }
     }
 }

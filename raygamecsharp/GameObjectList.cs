@@ -13,13 +13,14 @@ namespace raygamecsharp
     class GameObjectList
     {
         /// <summary>
-        /// Will serve as my Hirerachy 
+        /// Will serve as the Hirerachy 
         /// </summary>
         public static List<GameObject> Objects = new List<GameObject>
         {
             new Player("Player", new Vector2(0,0)),
-            new CollisionTestRectangle("Test", new Vector2(400,200)),
-            new CollisionTestCircle("Test", new Vector2(200,200))
+            //new CollisionTestRectangle("Test", new Vector2(700,500),new Vector2(400,40)),
+            //new CollisionTestRectangle("Test", new Vector2(400,500),new Vector2(40,40)),
+            //new CollisionTestCircle("Test", new Vector2(200,200))
         };
 
         private static List<GameObject> Queue = new List<GameObject>
@@ -31,7 +32,7 @@ namespace raygamecsharp
         };
 
         public static void NewObject(GameObject gameObject) 
-        {
+        {  
             Queue.Add(gameObject);
             gameObject.Start();
         }

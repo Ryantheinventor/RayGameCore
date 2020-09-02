@@ -17,15 +17,20 @@ namespace raygamecsharp
         float timePassed = 0;
         Color color = RED;
         public CollisionTestRectangle(string name, Vector2 pos) : base(name, pos)
-        { 
-        
+        {
+            transform.scale = new Vector3(40, 40, 0);
+        }
+        public CollisionTestRectangle(string name, Vector2 pos, Vector2 scale) : base(name, pos)
+        {
+            transform.scale = new Vector3(scale, 0);
         }
 
         public override void Start()
         {
-            transform.scale = new Vector3(40, 40, 0);
+            
             collider = new RectangleCollider();
-            collider.IsKinematic = true;
+            collider.IsKinematic = false;
+            collider.IsStatic = true;
             collider.EnableGravity = true;
             collider.Velocity = new Vector2(100, -500);
             collider.AutoClean = true;
@@ -54,12 +59,12 @@ namespace raygamecsharp
 
         public override void OnCollisionEnter(Collider other)
         {
-            color = GREEN;
+            //color = GREEN;
         }
 
         public override void OnCollisionExit(Collider other)
         {
-            color = RED;
+            //color = RED;
             
         }
     }
