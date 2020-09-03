@@ -1,15 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Numerics;
-using System.Text;
 using static Raylib_cs.Raylib;
-using static Raylib_cs.Color;
-using System.Numerics;
-using static raygamecsharp.GameObjectList;
-using raygamecsharp;
-using RGPhysics;
+using static RGCore.GameObjectList;
 
-namespace RGPhysics
+
+namespace RGCore.RGPhysics
 {
     class Physics
     {
@@ -62,8 +58,9 @@ namespace RGPhysics
                                 }
                             }
                         }
+                        objects[i].collider.ChecksForExits(collisions);
                     }
-                    objects[i].collider.ChecksForExits(collisions);
+                    
                 }
             }
             if (objects[objects.Count - 1].collider != null)

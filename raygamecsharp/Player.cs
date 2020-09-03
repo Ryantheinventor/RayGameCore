@@ -1,14 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using Raylib_cs;
 using static Raylib_cs.Raylib;
 using static Raylib_cs.Color;
 using System.Numerics;
-using static raygamecsharp.GameObjectList;
-using RGPhysics;
+using static RGCore.GameObjectList;
+using RGCore.RGPhysics;
 
-namespace raygamecsharp
+namespace RGCore
 {
     class Player : Sprite
     {
@@ -27,7 +25,7 @@ namespace raygamecsharp
             base.Start();
             //transform.translation = new Vector3(100, 100, 0);
             HideCursor();
-            texture = textures[0];
+            texture = textures["TestImage"];
             color = WHITE;
         }
 

@@ -1,15 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Raylib_cs;
+﻿using Raylib_cs;
 using static Raylib_cs.Raylib;
 using static Raylib_cs.Color;
 using System.Numerics;
-using static raygamecsharp.GameObjectList;
-using raygamecsharp;
-using RGPhysics;
+using RGCore.RGPhysics;
 
-namespace raygamecsharp
+namespace RGCore
 {
     class PlatformPlayer : GameObject
     {
@@ -33,7 +28,7 @@ namespace raygamecsharp
             //transform.translation = new Vector3(100, 100, 0);
             HideCursor();
         }
-
+        
         public override void Update()
         {
             bool moved = false;
@@ -49,7 +44,6 @@ namespace raygamecsharp
             }
             if (jump) 
             {
-               
                 jump = false;
             }
             if (!moved) 

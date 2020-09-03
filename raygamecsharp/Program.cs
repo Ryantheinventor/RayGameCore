@@ -23,12 +23,11 @@
 using Raylib_cs;
 using static Raylib_cs.Raylib;
 using static Raylib_cs.Color;
-using static raygamecsharp.GameObjectList;
+using static RGCore.GameObjectList;
 using System.Numerics;
-using raygamecsharp;
-using RGPhysics;
+using RGCore.RGPhysics;
 
-namespace raygamecsharp
+namespace RGCore
 {
     public class core_basic_window
     {
@@ -93,9 +92,10 @@ namespace raygamecsharp
             const int screenHeight = 900;
 
             InitWindow(screenWidth, screenHeight, "Raylib Game C#");
-
+            InitAudioDevice();
             SetTargetFPS(60);
-            //--------------------------------------------------------------------------------------
+            LoadTextures();
+            LoadSounds();
             
             Start();
             // Main game loop

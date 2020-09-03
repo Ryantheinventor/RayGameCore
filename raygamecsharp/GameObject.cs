@@ -1,15 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Numerics;
-using System.Text;
+﻿using System.Numerics;
 using Raylib_cs;
-using static Raylib_cs.Raylib;
-using static Raylib_cs.Color;
-using static raygamecsharp.GameObjectList;
-using raygamecsharp;
-using RGPhysics;
+using RGCore.RGPhysics;
 
-namespace raygamecsharp
+namespace RGCore
 {
     class GameObject
     {

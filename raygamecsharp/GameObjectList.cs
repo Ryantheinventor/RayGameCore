@@ -1,14 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 using Raylib_cs;
 using static Raylib_cs.Raylib;
-using static Raylib_cs.Color;
 using System.Numerics;
-using raygamecsharp;
-using RGPhysics;
 
-namespace raygamecsharp
+namespace RGCore
 {
     class GameObjectList
     {
@@ -17,31 +12,58 @@ namespace raygamecsharp
         /// </summary>
         public static List<GameObject> objects = new List<GameObject>
         {
-            
-            //new Player("Mouse Magic", new Vector2(0,0)),
             new CollisionTestRectangle("Platform", new Vector2(800,850),new Vector2(1600,40)),
             new CollisionTestRectangle("Platform", new Vector2(1400,650),new Vector2(400,40)),
+            new CollisionTestRectangle("Platform", new Vector2(200,700),new Vector2(400,40)),
+            new CollisionTestRectangle("Platform", new Vector2(800,550),new Vector2(400,40)),
+            new CollisionTestRectangle("Platform", new Vector2(200,450),new Vector2(400,40)),
+            new CollisionTestRectangle("Platform", new Vector2(200,230),new Vector2(400,40)),
+            new CollisionTestRectangle("Platform", new Vector2(800,110),new Vector2(400,40)),
+            new CollisionTestRectangle("Platform", new Vector2(800,300),new Vector2(400,40)),
+            new CollisionTestRectangle("Platform", new Vector2(1400,300),new Vector2(400,40)),
+            new CollisionTestRectangle("Wall", new Vector2(600,150),new Vector2(40,340)),
             new CollisionTestRectangle("Wall", new Vector2(0,450),new Vector2(40,900)),
             new CollisionTestRectangle("Wall", new Vector2(1600,450),new Vector2(40,900)),
-
+            new CollisionTestRectangle("Wall", new Vector2(800,0),new Vector2(1600,40)),
+            new CollisionTestRectangle("Wall", new Vector2(800,880),new Vector2(1600,40)),
+            new Sprite("Map",new Vector2(800,450),LoadTexture(@"Textures\Map.png"),1,1),
+            //new Player("Mouse Magic", new Vector2(0,0)),
+            new Pickup("Pickup",new Vector2(1550,610)),
+            new Pickup("Pickup",new Vector2(800,510)),
+            new Pickup("Pickup",new Vector2(640,260)),
+            new Pickup("Pickup",new Vector2(50,190)),
+            new Pickup("Pickup",new Vector2(50,660)),
             new Pickup("Pickup",new Vector2(1400,810)),
             new Pickup("Pickup",new Vector2(200,810)),
-            new Exit("Exit",new Vector2(1400,600)),
+            new JumpPad("JumpPad",new Vector2(1100,825), 1500f,10f),
+            new Exit("Exit",new Vector2(650,60)),
             new PlatformPlayer("Player", new Vector2(800,800))
         };
 
-        public static List<Texture2D> textures = new List<Texture2D> 
-        {
-            LoadTexture("TestImage.png"),
-            LoadTexture("Exit.png"),
-            LoadTexture("Pickup.png")
-        };
+        public static Dictionary<string, Texture2D> textures = new Dictionary<string, Texture2D>();
+        public static Dictionary<string, Sound> sounds = new Dictionary<string, Sound>();
+
+
 
         private static List<GameObject> Queue = new List<GameObject>();
         private static List<GameObject> Marked = new List<GameObject>();
 
-
-
+        public static void LoadTextures() 
+        {
+            textures.Add("TestImage", LoadTexture(@"Textures\TestImage.png"));
+            textures.Add("Exit", LoadTexture(@"Textures\Exit.png"));
+            textures.Add("ExitDoor1", LoadTexture(@"Textures\ExitDoor1.png"));
+            textures.Add("ExitDoor2", LoadTexture(@"Textures\ExitDoor2.png"));
+            textures.Add("PickupSheet", LoadTexture(@"Textures\PickupSheet.png"));
+            textures.Add("JumpPadCharged", LoadTexture(@"Textures\JumpPadCharged.png"));
+            textures.Add("JumpPadDischarged", LoadTexture(@"Textures\JumpPadDischarged.png"));
+            textures.Add("JumpPadJumping", LoadTexture(@"Textures\JumpPadJumping.png"));
+        }
+        public static void LoadSounds()
+        {
+            sounds.Add("CoinSound", LoadSound(@"Sounds\CoinSound.wav"));
+            sounds.Add("untitled", LoadSound(@"Sounds\untitled.wav"));
+        }
         public static void NewObject(GameObject gameObject) 
         {  
             Queue.Add(gameObject);

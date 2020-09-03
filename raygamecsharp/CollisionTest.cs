@@ -1,16 +1,10 @@
 ﻿using Raylib_cs;
-using System;
-using System.Collections.Generic;
-using System.Text;
-using Raylib_cs;
 using static Raylib_cs.Raylib;
 using static Raylib_cs.Color;
 using System.Numerics;
-using static raygamecsharp.GameObjectList;
-using raygamecsharp;
-using RGPhysics;
+using RGCore.RGPhysics;
 
-namespace raygamecsharp
+namespace RGCore
 {
     class CollisionTestRectangle : GameObject
     {
@@ -27,7 +21,6 @@ namespace raygamecsharp
 
         public override void Start()
         {
-            
             collider = new RectangleCollider();
             collider.IsKinematic = false;
             collider.IsStatic = true;
@@ -53,7 +46,7 @@ namespace raygamecsharp
         public override void Draw()
         {
             base.Draw();
-            DrawRectangle((int)transform.translation.X - (int)(transform.scale.X / 2), (int)transform.translation.Y - (int)(transform.scale.Y / 2), (int)transform.scale.X, (int)transform.scale.Y, color);
+            //DrawRectangle((int)transform.translation.X - (int)(transform.scale.X / 2), (int)transform.translation.Y - (int)(transform.scale.Y / 2), (int)transform.scale.X, (int)transform.scale.Y, color);
 
         }
 

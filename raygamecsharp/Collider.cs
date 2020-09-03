@@ -1,15 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Runtime.InteropServices.WindowsRuntime;
-using System.Text;
+﻿using System.Collections.Generic;
 using static Raylib_cs.Raylib;
 using static Raylib_cs.Color;
 using System.Numerics;
 using Raylib_cs;
-using raygamecsharp;
-using RGPhysics;
 
-namespace RGPhysics
+namespace RGCore.RGPhysics
 {
     abstract class Collider
     {

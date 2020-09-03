@@ -1,19 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Raylib_cs;
-using static Raylib_cs.Raylib;
+﻿using static Raylib_cs.Raylib;
 using static Raylib_cs.Color;
 using System.Numerics;
-using static raygamecsharp.GameObjectList;
-using RGPhysics;
+using static RGCore.GameObjectList;
+using RGCore.RGPhysics;
 
-namespace raygamecsharp
+namespace RGCore
 {
     class Exit : Sprite
     {
         bool hasWon = false;
-
+        bool canExit = false;
 
         public Exit(string name, Vector2 pos) : base(name, pos)
         {
@@ -22,16 +18,29 @@ namespace raygamecsharp
         public override void Start()
         {
 
-            transform.scale = new Vector3(80, 40, 0);
+            transform.scale = new Vector3(40, 60, 0);
             collider = new RectangleCollider();
             ((RectangleCollider)collider).scale = new Vector2(transform.scale.X, transform.scale.Y);
-            base.Start();
-            HideCursor();
-            texture = textures[1];
+            texture = textures["ExitDoor1"];
             color = WHITE;
+            base.Start();
         }
+
         public override void Update()
         {
+            canExit = true;
+            foreach (GameObject g in objects)
+            {
+                if (g.name == "Pickup")
+                {
+                    canExit = false;
+                    break;
+                }
+            }
+            if (canExit) 
+            {
+                texture = textures["ExitDoor2"];
+            }
         }
 
         public override void Draw()
@@ -43,7 +52,7 @@ namespace raygamecsharp
             }
             else 
             {
-                DrawText("Collect the pickups before exiting", 560, 835, 30, WHITE);
+                DrawText("Collect the pickups before exiting", 560, 850, 30, GREEN);
             }
         }
 
@@ -51,18 +60,16 @@ namespace raygamecsharp
         {
             if (other.gameObject.name == "Player") 
             {
-                bool canExit = true;
-                foreach (GameObject g in objects) 
-                {
-                    if (g.name == "Pickup") 
-                    {
-                        canExit = false;
-                        break;
-                    }
-                }
                 if (canExit)
-                {
+                { 
                     hasWon = true;
+                    foreach (GameObject g in objects) 
+                    {
+                        if (g.name == "Player") 
+                        {
+                            Destroy(g);
+                        }
+                    }
                 }
             }
         }
