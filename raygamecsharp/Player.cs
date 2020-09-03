@@ -6,7 +6,6 @@ using static Raylib_cs.Raylib;
 using static Raylib_cs.Color;
 using System.Numerics;
 using static raygamecsharp.GameObjectList;
-using raygamecsharp;
 using RGPhysics;
 
 namespace raygamecsharp
@@ -28,7 +27,7 @@ namespace raygamecsharp
             base.Start();
             //transform.translation = new Vector3(100, 100, 0);
             HideCursor();
-            texture = LoadTexture(@"TestImage.png");
+            texture = textures[0];
             color = WHITE;
         }
 
@@ -46,31 +45,33 @@ namespace raygamecsharp
             if (IsKeyPressed(KeyboardKey.KEY_ONE))
             {
                 
-
-                CollisionTestRectangle newTest1 = new CollisionTestRectangle("Test Platform", new Vector2(transform.translation.X, transform.translation.Y));
+                CollisionTestRectangle newTest1 = new CollisionTestRectangle("Platform", new Vector2(transform.translation.X, transform.translation.Y));
                 NewObject(newTest1);
                 newTest1.collider.Velocity = new Vector2(0, 0);
                 newTest1.collider.EnableGravity = false;
                 newTest1.collider.IsKinematic = false;
                 newTest1.collider.IsStatic = true;
+                Console.WriteLine($"{newTest1.transform.translation.X},{newTest1.transform.translation.Y}");
             }
             if (IsKeyPressed(KeyboardKey.KEY_TWO))
             {
-                CollisionTestRectangle newTest1 = new CollisionTestRectangle("Test Platform", new Vector2(transform.translation.X, transform.translation.Y), new Vector2(400, 40));
+                CollisionTestRectangle newTest1 = new CollisionTestRectangle("Platform", new Vector2(transform.translation.X, transform.translation.Y), new Vector2(400, 40));
                 NewObject(newTest1);
                 newTest1.collider.Velocity = new Vector2(0, 0);
                 newTest1.collider.EnableGravity = false;
                 newTest1.collider.IsKinematic = false;
                 newTest1.collider.IsStatic = true;
+                Console.WriteLine($"{newTest1.transform.translation.X},{newTest1.transform.translation.Y}");
             }
             if (IsKeyPressed(KeyboardKey.KEY_THREE))
             {
-                CollisionTestRectangle newTest1 = new CollisionTestRectangle("Test Platform", new Vector2(transform.translation.X, transform.translation.Y), new Vector2(40, 400));
+                CollisionTestRectangle newTest1 = new CollisionTestRectangle("Platform", new Vector2(transform.translation.X, transform.translation.Y), new Vector2(40, 400));
                 NewObject(newTest1);
                 newTest1.collider.Velocity = new Vector2(0, 0);
                 newTest1.collider.EnableGravity = false;
                 newTest1.collider.IsKinematic = false;
                 newTest1.collider.IsStatic = true;
+                Console.WriteLine($"{newTest1.transform.translation.X},{newTest1.transform.translation.Y}");
             }
             if (IsMouseButtonPressed(MouseButton.MOUSE_MIDDLE_BUTTON))
             {
@@ -86,7 +87,7 @@ namespace raygamecsharp
                 CollisionTestRectangle newTest = new CollisionTestRectangle("Test Falling", new Vector2(transform.translation.X, transform.translation.Y));
                 NewObject(newTest);
                 newTest.collider.Velocity = new Vector2(new Random().Next(-600, 600), -(new Random().Next(100, 600)));
-                newTest.collider.Velocity = new Vector2(500, 0);
+                newTest.collider.Velocity = new Vector2(-500, 0);
                 newTest.collider.IsKinematic = true;
                 newTest.collider.IsStatic = false;
             }
@@ -95,7 +96,7 @@ namespace raygamecsharp
                 CollisionTestRectangle newTest = new CollisionTestRectangle("Test Falling", new Vector2(transform.translation.X, transform.translation.Y));
                 NewObject(newTest);
                 newTest.collider.Velocity = new Vector2(new Random().Next(-600, 600), -(new Random().Next(100, 600)));
-                newTest.collider.Velocity = new Vector2(-500, 0);
+                newTest.collider.Velocity = new Vector2(500, 0);
                 newTest.collider.IsKinematic = true;
                 newTest.collider.IsStatic = false;
             }

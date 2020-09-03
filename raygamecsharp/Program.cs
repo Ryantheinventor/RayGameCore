@@ -33,11 +33,11 @@ namespace raygamecsharp
     public class core_basic_window
     {
         static Vector2 cameraPos = new Vector2(0,0);
-        static bool ShowDebug = true;
+        static bool ShowDebug = false;
         
         public static void Start()
         {
-            foreach (GameObject g in Objects) 
+            foreach (GameObject g in objects) 
             {
                 g.Start();
             }
@@ -51,7 +51,7 @@ namespace raygamecsharp
             }
 
             //Run all update functions
-            foreach (GameObject g in Objects)
+            foreach (GameObject g in objects)
             {
                 g.Update();
             }
@@ -60,7 +60,7 @@ namespace raygamecsharp
             Physics.Update();
 
             //Run all physics update functions
-            foreach (GameObject g in Objects)
+            foreach (GameObject g in objects)
             {
                 g.PhysicsUpdate();
             }
@@ -73,13 +73,13 @@ namespace raygamecsharp
         public static void Draw() 
         {
             ClearBackground(RAYWHITE);
-            foreach (GameObject g in Objects)
+            foreach (GameObject g in objects)
             {
                 g.Draw();
             }
             if (ShowDebug) {
                 DrawText(GetFPS().ToString(), 10, 10, 20, GREEN);
-                DrawText($"Object Count:{Objects.Count}", 10, 40, 20, RED);
+                DrawText($"Object Count:{objects.Count}", 10, 40, 20, RED);
                 DrawText(GetObjectListString(), 10, 60, 10, RED);
             }
             //DrawText("Congrats! You created your first window!", 190, 200, 20, MAROON);

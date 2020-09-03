@@ -16,7 +16,7 @@ namespace RGPhysics
         public abstract bool AutoClean { get; set; }
         public abstract bool IsStatic { get; set; }
         public abstract bool IsKinematic { get; set; }
-        public abstract Vector2 Velocity { get; set; }
+        public Vector2 Velocity = new Vector2();
         public abstract float Bounce { get; set; }
         public abstract bool EnableGravity { get; set; }
         protected List<Collider> lastCheck = new List<Collider>();
@@ -24,7 +24,6 @@ namespace RGPhysics
         public abstract string ColliderType { get; }
         public GameObject gameObject;
         public Vector2 lastPos = new Vector2();
-
         public abstract void Draw();
         public abstract bool CollidesWith(Collider other);
         public abstract bool CollidesWithCircle(CircleCollider other);
@@ -37,7 +36,6 @@ namespace RGPhysics
     {
         public override float Bounce { get; set; } = 1f;
         public override bool AutoClean { get; set; } = false;
-        public override Vector2 Velocity { get; set; } = new Vector2(0, 0);
         public override bool IsKinematic { get; set; } = false;
         public override bool IsStatic { get; set; } = false;
         public override bool EnableGravity { get; set; } = false;
@@ -108,7 +106,6 @@ namespace RGPhysics
         public override float Bounce { get; set; } = 1f;
         public override bool AutoClean { get; set; } = false;
         public override bool EnableGravity { get; set; } = false;
-        public override Vector2 Velocity { get; set; } = new Vector2(0,0);
         public override bool IsKinematic { get; set; } = false;
         public override bool IsStatic { get; set; } = false;
         public override string ColliderType

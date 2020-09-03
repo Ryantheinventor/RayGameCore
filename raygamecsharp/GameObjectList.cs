@@ -15,21 +15,32 @@ namespace raygamecsharp
         /// <summary>
         /// Will serve as the Hirerachy 
         /// </summary>
-        public static List<GameObject> Objects = new List<GameObject>
+        public static List<GameObject> objects = new List<GameObject>
         {
-            new Player("Player", new Vector2(0,0)),
-            //new CollisionTestRectangle("Test", new Vector2(700,500),new Vector2(400,40)),
-            //new CollisionTestRectangle("Test", new Vector2(400,500),new Vector2(40,40)),
-            //new CollisionTestCircle("Test", new Vector2(200,200))
+            
+            //new Player("Mouse Magic", new Vector2(0,0)),
+            new CollisionTestRectangle("Platform", new Vector2(800,850),new Vector2(1600,40)),
+            new CollisionTestRectangle("Platform", new Vector2(1400,650),new Vector2(400,40)),
+            new CollisionTestRectangle("Wall", new Vector2(0,450),new Vector2(40,900)),
+            new CollisionTestRectangle("Wall", new Vector2(1600,450),new Vector2(40,900)),
+
+            new Pickup("Pickup",new Vector2(1400,810)),
+            new Pickup("Pickup",new Vector2(200,810)),
+            new Exit("Exit",new Vector2(1400,600)),
+            new PlatformPlayer("Player", new Vector2(800,800))
         };
 
-        private static List<GameObject> Queue = new List<GameObject>
+        public static List<Texture2D> textures = new List<Texture2D> 
         {
+            LoadTexture("TestImage.png"),
+            LoadTexture("Exit.png"),
+            LoadTexture("Pickup.png")
         };
 
-        private static List<GameObject> Marked = new List<GameObject>
-        {
-        };
+        private static List<GameObject> Queue = new List<GameObject>();
+        private static List<GameObject> Marked = new List<GameObject>();
+
+
 
         public static void NewObject(GameObject gameObject) 
         {  
@@ -41,12 +52,12 @@ namespace raygamecsharp
         {
             foreach (GameObject g in Queue) 
             {
-                Objects.Add(g);
+                objects.Add(g);
             }
             Queue = new List<GameObject>();
             foreach (GameObject g in Marked)
             {
-                Objects.Remove(g);
+                objects.Remove(g);
             }
             Marked = new List<GameObject>();
         }
@@ -60,7 +71,7 @@ namespace raygamecsharp
         {
             string output = "";
 
-            foreach (GameObject g in Objects) 
+            foreach (GameObject g in objects) 
             {
                 output += $"{g.GetType()}:{g.name}\n";
             }

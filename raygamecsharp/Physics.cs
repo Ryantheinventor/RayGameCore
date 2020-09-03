@@ -20,7 +20,7 @@ namespace RGPhysics
         public static void Update() 
         {
             //update kinimatic object positions
-            foreach (GameObject g in Objects) {
+            foreach (GameObject g in objects) {
                 if (g.collider != null)
                 {
                     
@@ -38,37 +38,41 @@ namespace RGPhysics
                         {
                             c.Velocity += new Vector2(0, gravity);
                         }
+                        if (c.EnableGravity)
+                        {
+                            c.Velocity += new Vector2(0, gravity);
+                        }
                     }
                 }
             }
             //Run collision checks
-            if (Objects.Count > 1)
+            if (objects.Count > 1)
             {
-                for (int i = 0; i < Objects.Count - 1; i++)
+                for (int i = 0; i < objects.Count - 1; i++)
                 {
-                    if (Objects[i].collider != null)
+                    if (objects[i].collider != null)
                     {
-                        for (int j = i + 1; j < Objects.Count; j++)
+                        for (int j = i + 1; j < objects.Count; j++)
                         {
-                            if (Objects[j].collider != null)
+                            if (objects[j].collider != null)
                             {
-                                if (Objects[i].collider.CollidesWith(Objects[j].collider))
+                                if (objects[i].collider.CollidesWith(objects[j].collider))
                                 {
-                                    collisions.Add(new Collision(Objects[j].collider, Objects[i].collider, true));
+                                    collisions.Add(new Collision(objects[j].collider, objects[i].collider, true));
                                 }
                             }
                         }
                     }
-                    Objects[i].collider.ChecksForExits(collisions);
+                    objects[i].collider.ChecksForExits(collisions);
                 }
             }
-            if (Objects[Objects.Count - 1].collider != null)
+            if (objects[objects.Count - 1].collider != null)
             {
-                Objects[Objects.Count - 1].collider.ChecksForExits(collisions);
+                objects[objects.Count - 1].collider.ChecksForExits(collisions);
             }
 
             //check if kinimatic objects have collided and react acordingly
-            foreach (GameObject g in Objects)
+            foreach (GameObject g in objects)
             {
                 if (g.collider != null)
                 {
@@ -82,8 +86,6 @@ namespace RGPhysics
                                 {
                                     Vector2 c2Pos = collision.collider2.GetClosestMidpoint(new Vector2(collision.collider1.gameObject.transform.translation.X,collision.collider1.gameObject.transform.translation.Y));
                                     string direction = "UP";
-                                    //TODO collision object not always the same could have kinimatic objects in either slot...
-                                    //TODO implemt reactions on collisions with kinematic objects
                                     if (collision.collider1.ColliderType == "Rectangle")
                                     {
                                         float edgeRight = collision.collider1.lastPos.X + (((RectangleCollider)collision.collider1).scale.X / 2);
@@ -101,15 +103,6 @@ namespace RGPhysics
                                         {
                                             inToMid = (((RectangleCollider)collision.collider1).scale.X / 2) * -1;
                                         }
-
-                                        Console.WriteLine($"Edge Right:{edgeRight}");
-                                        Console.WriteLine($"Edge Left:{edgeLeft}");
-                                        Console.WriteLine($"Edge Down:{edgeDown}");
-                                        Console.WriteLine($"Edge Up:{edgeUp}");
-                                        Console.WriteLine($"Edge Right Dist:{edgeRightDist}");
-                                        Console.WriteLine($"Edge Left Dist:{edgeLeftDist}");
-                                        Console.WriteLine($"Edge Down Dist:{edgeDownDist}");
-                                        Console.WriteLine($"Edge Up Dist:{edgeUpDist}");
 
 
 
@@ -134,7 +127,6 @@ namespace RGPhysics
                                     {
                                         Console.WriteLine($"Unsuported physics collider:{collision.collider1.ColliderType}");
                                     }
-                                    Console.WriteLine($"Direction:{direction}");
 
 
                                     if (collision.collider1.IsKinematic && !collision.collider2.IsKinematic)
@@ -146,14 +138,16 @@ namespace RGPhysics
                                                 if (collision.collider1.ColliderType == "Rectangle" && collision.collider2.ColliderType == "Rectangle")
                                                 {
                                                     collision.collider1.gameObject.transform.translation.Y = collision.collider2.gameObject.transform.translation.Y - ((((RectangleCollider)collision.collider2).scale.Y / 2) + (((RectangleCollider)collision.collider1).scale.Y / 2));
-                                                    collision.collider1.Velocity = new Vector2(collision.collider1.Velocity.X, 0);
+                                                    if(collision.collider1.Velocity.Y >= 0)
+                                                        collision.collider1.Velocity = new Vector2(collision.collider1.Velocity.X, 0);
                                                 }
                                                 break;
                                             case "Up":
                                                 if (collision.collider1.ColliderType == "Rectangle" && collision.collider2.ColliderType == "Rectangle")
                                                 {
                                                     collision.collider1.gameObject.transform.translation.Y = collision.collider2.gameObject.transform.translation.Y + ((((RectangleCollider)collision.collider2).scale.Y / 2) + (((RectangleCollider)collision.collider1).scale.Y / 2));
-                                                    collision.collider1.Velocity = new Vector2(collision.collider1.Velocity.X, 0);
+                                                    if (collision.collider1.Velocity.Y <= 0)
+                                                        collision.collider1.Velocity = new Vector2(collision.collider1.Velocity.X, 0);
                                                 }
                                                 break;
                                             case "Left":
@@ -181,28 +175,30 @@ namespace RGPhysics
                                                 if (collision.collider2.ColliderType == "Rectangle" && collision.collider1.ColliderType == "Rectangle")
                                                 {
                                                     collision.collider2.gameObject.transform.translation.Y = collision.collider1.gameObject.transform.translation.Y - ((((RectangleCollider)collision.collider1).scale.Y / 2) + (((RectangleCollider)collision.collider2).scale.Y / 2));
-                                                    collision.collider2.Velocity = new Vector2(collision.collider1.Velocity.X, 0);
+                                                    if (collision.collider2.Velocity.Y >= 0)
+                                                        collision.collider2.Velocity = new Vector2(collision.collider2.Velocity.X, 0);
                                                 }
                                                 break;
                                             case "Down":
                                                 if (collision.collider2.ColliderType == "Rectangle" && collision.collider1.ColliderType == "Rectangle")
                                                 {
                                                     collision.collider2.gameObject.transform.translation.Y = collision.collider1.gameObject.transform.translation.Y + ((((RectangleCollider)collision.collider1).scale.Y / 2) + (((RectangleCollider)collision.collider2).scale.Y / 2));
-                                                    collision.collider2.Velocity = new Vector2(collision.collider1.Velocity.X, 0);
+                                                    if (collision.collider2.Velocity.Y <= 0)
+                                                        collision.collider2.Velocity = new Vector2(collision.collider2.Velocity.X, 0);
                                                 }
                                                 break;
                                             case "Left":
                                                 if (collision.collider2.ColliderType == "Rectangle" && collision.collider1.ColliderType == "Rectangle")
                                                 {
                                                     collision.collider2.gameObject.transform.translation.X = collision.collider1.gameObject.transform.translation.X - ((((RectangleCollider)collision.collider1).scale.X / 2) + (((RectangleCollider)collision.collider2).scale.X / 2));
-                                                    collision.collider2.Velocity = new Vector2(0, collision.collider1.Velocity.Y);
+                                                    collision.collider2.Velocity = new Vector2(0, collision.collider2.Velocity.Y);
                                                 }
                                                 break;
                                             case "Right":
                                                 if (collision.collider2.ColliderType == "Rectangle" && collision.collider1.ColliderType == "Rectangle")
                                                 {
                                                     collision.collider2.gameObject.transform.translation.X = collision.collider1.gameObject.transform.translation.X + ((((RectangleCollider)collision.collider1).scale.X / 2) + (((RectangleCollider)collision.collider2).scale.X / 2));
-                                                    collision.collider2.Velocity = new Vector2(0, collision.collider1.Velocity.Y);
+                                                    collision.collider2.Velocity = new Vector2(0, collision.collider2.Velocity.Y);
                                                 }
                                                 break;
                                         }
