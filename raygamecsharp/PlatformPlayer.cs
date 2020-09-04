@@ -24,6 +24,7 @@ namespace RGCore
             ((RectangleCollider)collider).scale = new Vector2(transform.scale.X, transform.scale.Y);
             collider.IsKinematic = true;
             collider.EnableGravity = true;
+            collider.Bounce = 0f;
             base.Start();
             //transform.translation = new Vector3(100, 100, 0);
             HideCursor();

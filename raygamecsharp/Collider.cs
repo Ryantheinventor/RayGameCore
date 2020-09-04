@@ -29,7 +29,7 @@ namespace RGCore.RGPhysics
 
     class CircleCollider : Collider
     {
-        public override float Bounce { get; set; } = 1f;
+        public override float Bounce { get; set; } = 0f;
         public override bool AutoClean { get; set; } = false;
         public override bool IsKinematic { get; set; } = false;
         public override bool IsStatic { get; set; } = false;
@@ -98,7 +98,7 @@ namespace RGCore.RGPhysics
 
     class RectangleCollider : Collider
     {
-        public override float Bounce { get; set; } = 1f;
+        public override float Bounce { get; set; } = 0f;
         public override bool AutoClean { get; set; } = false;
         public override bool EnableGravity { get; set; } = false;
         public override bool IsKinematic { get; set; } = false;
@@ -111,7 +111,7 @@ namespace RGCore.RGPhysics
 
         public override void Draw()
         {
-            DrawRectangleLines((int)gameObject.transform.translation.X, (int)gameObject.transform.translation.Y, (int)scale.X, (int)scale.Y,GREEN);
+            DrawRectangleLines((int)gameObject.transform.translation.X- (int)scale.X/2, (int)gameObject.transform.translation.Y-(int)scale.Y/2, (int)scale.X, (int)scale.Y,GREEN);
         }
 
         public override bool CollidesWith(Collider other)

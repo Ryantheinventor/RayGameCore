@@ -32,8 +32,9 @@ namespace RGCore
     public class core_basic_window
     {
         static Vector2 cameraPos = new Vector2(0,0);
-        static bool ShowDebug = false;
-        
+        public static bool showDebug1 = false;
+        public static bool showDebug2 = false;
+
         public static void Start()
         {
             foreach (GameObject g in objects) 
@@ -44,9 +45,13 @@ namespace RGCore
 
         public static void Update() 
         {
-            if (IsKeyPressed(KeyboardKey.KEY_LEFT_BRACKET)) 
+            if (IsKeyPressed(KeyboardKey.KEY_LEFT_BRACKET))
             {
-                ShowDebug = !ShowDebug;
+                showDebug1 = !showDebug1;
+            }
+            if (IsKeyPressed(KeyboardKey.KEY_RIGHT_BRACKET))
+            {
+                showDebug2 = !showDebug2;
             }
 
             //Run all update functions
@@ -76,10 +81,21 @@ namespace RGCore
             {
                 g.Draw();
             }
-            if (ShowDebug) {
+            if (showDebug1) {
+                DrawRectangle(0, 0, 400, 900, Fade(RED, 0.5f));
                 DrawText(GetFPS().ToString(), 10, 10, 20, GREEN);
-                DrawText($"Object Count:{objects.Count}", 10, 40, 20, RED);
-                DrawText(GetObjectListString(), 10, 60, 10, RED);
+                DrawText($"Object Count:{objects.Count}", 10, 40, 20, GREEN);
+                DrawText(GetObjectListString(), 10, 60, 10, GREEN);
+            }
+            if (showDebug2) 
+            {
+                foreach (GameObject g in objects)
+                {
+                    if (g.collider != null)
+                    {
+                        g.collider.Draw();
+                    }
+                }
             }
             //DrawText("Congrats! You created your first window!", 190, 200, 20, MAROON);
         }

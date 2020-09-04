@@ -125,7 +125,11 @@ namespace RGCore.RGPhysics
                                         Console.WriteLine($"Unsuported physics collider:{collision.collider1.ColliderType}");
                                     }
 
-
+                                    float bounce = collision.collider1.Bounce;
+                                    if (bounce < collision.collider2.Bounce) 
+                                    {
+                                        bounce = collision.collider2.Bounce;
+                                    }
                                     if (collision.collider1.IsKinematic && !collision.collider2.IsKinematic)
                                     {
                                         //move collider1 out of collider2
@@ -136,7 +140,7 @@ namespace RGCore.RGPhysics
                                                 {
                                                     collision.collider1.gameObject.transform.translation.Y = collision.collider2.gameObject.transform.translation.Y - ((((RectangleCollider)collision.collider2).scale.Y / 2) + (((RectangleCollider)collision.collider1).scale.Y / 2));
                                                     if(collision.collider1.Velocity.Y >= 0)
-                                                        collision.collider1.Velocity = new Vector2(collision.collider1.Velocity.X, 0);
+                                                        collision.collider1.Velocity = new Vector2(collision.collider1.Velocity.X, -collision.collider1.Velocity.Y*bounce);
                                                 }
                                                 break;
                                             case "Up":
@@ -144,21 +148,21 @@ namespace RGCore.RGPhysics
                                                 {
                                                     collision.collider1.gameObject.transform.translation.Y = collision.collider2.gameObject.transform.translation.Y + ((((RectangleCollider)collision.collider2).scale.Y / 2) + (((RectangleCollider)collision.collider1).scale.Y / 2));
                                                     if (collision.collider1.Velocity.Y <= 0)
-                                                        collision.collider1.Velocity = new Vector2(collision.collider1.Velocity.X, 0);
+                                                        collision.collider1.Velocity = new Vector2(collision.collider1.Velocity.X, -collision.collider1.Velocity.Y * bounce);
                                                 }
                                                 break;
                                             case "Left":
                                                 if (collision.collider1.ColliderType == "Rectangle" && collision.collider2.ColliderType == "Rectangle")
                                                 {
                                                     collision.collider1.gameObject.transform.translation.X = collision.collider2.gameObject.transform.translation.X + ((((RectangleCollider)collision.collider2).scale.X / 2) + (((RectangleCollider)collision.collider1).scale.X / 2));
-                                                    collision.collider1.Velocity = new Vector2(0, collision.collider1.Velocity.Y);
+                                                    collision.collider1.Velocity = new Vector2(-collision.collider1.Velocity.X * bounce, collision.collider1.Velocity.Y);
                                                 }
                                                 break;
                                             case "Right":
                                                 if (collision.collider1.ColliderType == "Rectangle" && collision.collider2.ColliderType == "Rectangle")
                                                 {
                                                     collision.collider1.gameObject.transform.translation.X = collision.collider2.gameObject.transform.translation.X - ((((RectangleCollider)collision.collider2).scale.X / 2) + (((RectangleCollider)collision.collider1).scale.X / 2));
-                                                    collision.collider1.Velocity = new Vector2(0, collision.collider1.Velocity.Y);
+                                                    collision.collider1.Velocity = new Vector2(-collision.collider1.Velocity.X * bounce, collision.collider1.Velocity.Y);
                                                 }
                                                 break;
 
@@ -173,7 +177,7 @@ namespace RGCore.RGPhysics
                                                 {
                                                     collision.collider2.gameObject.transform.translation.Y = collision.collider1.gameObject.transform.translation.Y - ((((RectangleCollider)collision.collider1).scale.Y / 2) + (((RectangleCollider)collision.collider2).scale.Y / 2));
                                                     if (collision.collider2.Velocity.Y >= 0)
-                                                        collision.collider2.Velocity = new Vector2(collision.collider2.Velocity.X, 0);
+                                                        collision.collider2.Velocity = new Vector2(collision.collider2.Velocity.X, -collision.collider2.Velocity.Y * bounce);
                                                 }
                                                 break;
                                             case "Down":
@@ -181,21 +185,21 @@ namespace RGCore.RGPhysics
                                                 {
                                                     collision.collider2.gameObject.transform.translation.Y = collision.collider1.gameObject.transform.translation.Y + ((((RectangleCollider)collision.collider1).scale.Y / 2) + (((RectangleCollider)collision.collider2).scale.Y / 2));
                                                     if (collision.collider2.Velocity.Y <= 0)
-                                                        collision.collider2.Velocity = new Vector2(collision.collider2.Velocity.X, 0);
+                                                        collision.collider2.Velocity = new Vector2(collision.collider2.Velocity.X, -collision.collider2.Velocity.Y * bounce);
                                                 }
                                                 break;
                                             case "Left":
                                                 if (collision.collider2.ColliderType == "Rectangle" && collision.collider1.ColliderType == "Rectangle")
                                                 {
                                                     collision.collider2.gameObject.transform.translation.X = collision.collider1.gameObject.transform.translation.X - ((((RectangleCollider)collision.collider1).scale.X / 2) + (((RectangleCollider)collision.collider2).scale.X / 2));
-                                                    collision.collider2.Velocity = new Vector2(0, collision.collider2.Velocity.Y);
+                                                    collision.collider2.Velocity = new Vector2(-collision.collider2.Velocity.X * bounce, collision.collider2.Velocity.Y);
                                                 }
                                                 break;
                                             case "Right":
                                                 if (collision.collider2.ColliderType == "Rectangle" && collision.collider1.ColliderType == "Rectangle")
                                                 {
                                                     collision.collider2.gameObject.transform.translation.X = collision.collider1.gameObject.transform.translation.X + ((((RectangleCollider)collision.collider1).scale.X / 2) + (((RectangleCollider)collision.collider2).scale.X / 2));
-                                                    collision.collider2.Velocity = new Vector2(0, collision.collider2.Velocity.Y);
+                                                    collision.collider2.Velocity = new Vector2(-collision.collider2.Velocity.X * bounce, collision.collider2.Velocity.Y);
                                                 }
                                                 break;
                                         }

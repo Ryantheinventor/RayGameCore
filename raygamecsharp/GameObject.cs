@@ -1,6 +1,8 @@
 ﻿using System.Numerics;
 using Raylib_cs;
 using RGCore.RGPhysics;
+using static Raylib_cs.Raylib;
+using static Raylib_cs.Color;
 
 namespace RGCore
 {
@@ -46,10 +48,7 @@ namespace RGCore
 
         public virtual void Draw()
         {
-            if (collider != null) 
-            { 
-                
-            }
+
         }
 
         /// <summary>

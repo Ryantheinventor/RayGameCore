@@ -52,6 +52,7 @@ namespace RGCore
             }
             else 
             {
+                DrawRectangle(550, 840, 545, 50, Fade(BLACK, 0.5f));
                 DrawText("Collect the pickups before exiting", 560, 850, 30, GREEN);
             }
         }
