@@ -52,14 +52,18 @@ namespace RGCore
         }
 
         /// <summary>
-        /// Collisions are checked before Update is called
+        /// Called after Physics are calculated and when a collision is still occurring 
         /// </summary>
-        /// <param name="other"></param>
-        public virtual void OnCollisionEnter(Collider other)
+        /// <param name="other">The object that is being collided with</param>
+        public virtual void OnCollisionStay(Collider other)
         {
 
         }
 
+        /// <summary>
+        /// Called after Physics are calculated and when a collision just ended 
+        /// </summary>
+        /// <param name="other">The object that has stoped colliding</param>
         public virtual void OnCollisionExit(Collider other)
         {
 

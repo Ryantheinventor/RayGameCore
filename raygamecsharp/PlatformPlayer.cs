@@ -63,7 +63,7 @@ namespace RGCore
             base.Draw();
             DrawRectangle((int)transform.translation.X - (int)(transform.scale.X / 2), (int)transform.translation.Y - (int)(transform.scale.Y / 2), (int)transform.scale.X, (int)transform.scale.Y, BLUE);
         }
-        public override void OnCollisionEnter(Collider other)
+        public override void OnCollisionStay(Collider other)
         {
             if (other.IsStatic && other.gameObject.name == "Platform") 
             {

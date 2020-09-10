@@ -46,11 +46,11 @@ namespace RGCore
         public override void Draw()
         {
             base.Draw();
-            //DrawRectangle((int)transform.translation.X - (int)(transform.scale.X / 2), (int)transform.translation.Y - (int)(transform.scale.Y / 2), (int)transform.scale.X, (int)transform.scale.Y, color);
+            DrawRectangle((int)transform.translation.X - (int)(transform.scale.X / 2), (int)transform.translation.Y - (int)(transform.scale.Y / 2), (int)transform.scale.X, (int)transform.scale.Y, color);
 
         }
 
-        public override void OnCollisionEnter(Collider other)
+        public override void OnCollisionStay(Collider other)
         {
             //color = GREEN;
         }
@@ -91,7 +91,7 @@ namespace RGCore
             DrawCircle((int)transform.translation.X, (int)transform.translation.Y, 20, color);
         }
 
-        public override void OnCollisionEnter(Collider other)
+        public override void OnCollisionStay(Collider other)
         {
             color = GREEN;
             

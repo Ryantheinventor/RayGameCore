@@ -8,22 +8,71 @@ namespace RGCore.RGPhysics
 {
     abstract class Collider
     {
+        /// <summary>
+        /// Can the object be marked for destuction by the physics system
+        /// </summary>
         public abstract bool AutoClean { get; set; }
+
+        /// <summary>
+        /// Is the object nonmoving but still solid
+        /// </summary>
         public abstract bool IsStatic { get; set; }
+
+        /// <summary>
+        /// Is the object subject to physics
+        /// </summary>
         public abstract bool IsKinematic { get; set; }
         public Vector2 Velocity = new Vector2();
+
+        /// <summary>
+        /// How bouncy the object is on collison(0 is no bounce, 1 is full bounce)
+        /// </summary>
         public abstract float Bounce { get; set; }
+
+        /// <summary>
+        /// Does the object obay gravity
+        /// </summary>
         public abstract bool EnableGravity { get; set; }
         protected List<Collider> lastCheck = new List<Collider>();
         protected List<Collider> thisCheck = new List<Collider>();
+
+        /// <summary>
+        /// The type of collider
+        /// </summary>
         public abstract string ColliderType { get; }
+        /// <summary>
+        /// The GameObject the collider is attached to
+        /// </summary>
         public GameObject gameObject;
         public Vector2 lastPos = new Vector2();
+        /// <summary>
+        /// Draws bounding box of collider
+        /// </summary>
         public abstract void Draw();
+
+        /// <summary>
+        /// Checks if this collider is colliding with other
+        /// </summary>
         public abstract bool CollidesWith(Collider other);
+
+        /// <summary>
+        /// Checks if this collider is colliding with other as a circle
+        /// </summary>
         public abstract bool CollidesWithCircle(CircleCollider other);
+
+        /// <summary>
+        /// Checks if this collider is colliding with other as a rectangle
+        /// </summary>
         public abstract bool CollidesWithRec(RectangleCollider other);
+
+        /// <summary>
+        /// Checks if any collisions have finished
+        /// </summary>
         public abstract void ChecksForExits(List<Collision> collisions);
+
+        /// <returns>
+        /// a point in the middle of the collider closest to the target
+        /// </returns>
         public abstract Vector2 GetClosestMidpoint(Vector2 target);
     }
 

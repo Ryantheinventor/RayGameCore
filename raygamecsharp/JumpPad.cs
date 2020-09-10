@@ -48,7 +48,7 @@ namespace RGCore
 
         }
 
-        public override void OnCollisionEnter(Collider other)
+        public override void OnCollisionStay(Collider other)
         {
             if (other.gameObject.name == "Player" && timeCharging >= chargeTime) 
             {

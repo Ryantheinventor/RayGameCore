@@ -33,12 +33,13 @@ namespace RGCore
         {
             if (IsMouseButtonPressed(MouseButton.MOUSE_LEFT_BUTTON))
             {
-                CollisionTestRectangle newTest = new CollisionTestRectangle("Test Falling", new Vector2(transform.translation.X, transform.translation.Y));
+                CollisionTestRectangle newTest = new CollisionTestRectangle("Bounce", new Vector2(transform.translation.X, transform.translation.Y));
                 NewObject(newTest);
-                newTest.collider.Velocity = new Vector2(0, 0);
-                newTest.collider.EnableGravity = true;
+                newTest.collider.Velocity = new Vector2(1000, 1000);
+                newTest.collider.EnableGravity = false;
                 newTest.collider.IsKinematic = true;
                 newTest.collider.IsStatic = false;
+                newTest.collider.Bounce = 1f;
             }
             if (IsKeyPressed(KeyboardKey.KEY_ONE))
             {
@@ -111,7 +112,7 @@ namespace RGCore
             //transform.translation += new Vector3(0, 2, 0);
         }
 
-        public override void OnCollisionEnter(Collider other)
+        public override void OnCollisionStay(Collider other)
         {
             if (IsMouseButtonDown(MouseButton.MOUSE_RIGHT_BUTTON))
             {

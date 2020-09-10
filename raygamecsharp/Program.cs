@@ -37,6 +37,7 @@ namespace RGCore
 
         public static void Start()
         {
+            //call all start functions in GameObjects
             foreach (GameObject g in objects) 
             {
                 g.Start();
@@ -45,6 +46,7 @@ namespace RGCore
 
         public static void Update() 
         {
+            //Debug
             if (IsKeyPressed(KeyboardKey.KEY_LEFT_BRACKET))
             {
                 showDebug1 = !showDebug1;
@@ -77,10 +79,13 @@ namespace RGCore
         public static void Draw() 
         {
             ClearBackground(RAYWHITE);
+            //Draws all GameObjects
             foreach (GameObject g in objects)
             {
                 g.Draw();
             }
+
+            //Debug
             if (showDebug1) {
                 DrawRectangle(0, 0, 400, 900, Fade(RED, 0.5f));
                 DrawText(GetFPS().ToString(), 10, 10, 20, GREEN);
@@ -97,7 +102,6 @@ namespace RGCore
                     }
                 }
             }
-            //DrawText("Congrats! You created your first window!", 190, 200, 20, MAROON);
         }
 
         public static int Main()
