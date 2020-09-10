@@ -195,7 +195,7 @@ namespace RGCore.RGPhysics
                                                 if (collision.collider2.ColliderType == "Rectangle" && collision.collider1.ColliderType == "Rectangle")
                                                 {
                                                     collision.collider2.gameObject.transform.translation.X = collision.collider1.gameObject.transform.translation.X - ((((RectangleCollider)collision.collider1).scale.X / 2) + (((RectangleCollider)collision.collider2).scale.X / 2));
-                                                    if (collision.collider1.Velocity.X <= 0)
+                                                    if (collision.collider2.Velocity.X >= 0)
                                                         collision.collider2.Velocity = new Vector2(-collision.collider2.Velocity.X * bounce, collision.collider2.Velocity.Y);
                                                 }
                                                 break;
@@ -203,7 +203,7 @@ namespace RGCore.RGPhysics
                                                 if (collision.collider2.ColliderType == "Rectangle" && collision.collider1.ColliderType == "Rectangle")
                                                 {
                                                     collision.collider2.gameObject.transform.translation.X = collision.collider1.gameObject.transform.translation.X + ((((RectangleCollider)collision.collider1).scale.X / 2) + (((RectangleCollider)collision.collider2).scale.X / 2));
-                                                    if (collision.collider1.Velocity.X >= 0)
+                                                    if (collision.collider2.Velocity.X <= 0)
                                                         collision.collider2.Velocity = new Vector2(-collision.collider2.Velocity.X * bounce, collision.collider2.Velocity.Y);
                                                 }
                                                 break;
